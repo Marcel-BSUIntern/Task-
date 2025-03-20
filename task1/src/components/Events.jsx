@@ -160,6 +160,7 @@ const Events = () => {
         <Typography
           variant="h2"
           fontWeight="bold"
+          color="black"
           sx={{ fontSize: isMobile ? "32px" : "64px" }}
         >
           Upcoming Event Lists
