@@ -69,11 +69,12 @@ const Login = () => {
       <Paper
         elevation={3}
         sx={{
-          width: "600px", // Increased width to make it wider
-          padding: "25px 40px", // Balanced padding
-          borderRadius: "15px", // Rounded corners
+          width: "90%", // ✅ Adjusted for responsiveness
+          maxWidth: "500px", // ✅ Less wide on large screens
+          padding: "25px 30px", // ✅ Balanced padding
+          borderRadius: "15px", // ✅ Rounded corners
           textAlign: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Soft shadow
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // ✅ Soft shadow
         }}
       >
         {/* Title */}
@@ -91,7 +92,7 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           sx={{
-            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // Slightly rounded field
+            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // ✅ Slightly rounded field
           }}
         />
 
@@ -106,7 +107,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           sx={{
-            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // Slightly rounded field
+            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // ✅ Slightly rounded field
           }}
         />
 
