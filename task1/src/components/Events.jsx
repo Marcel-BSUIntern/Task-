@@ -17,13 +17,24 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
+  useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import EventIcon from "@mui/icons-material/Event";
+import PeopleIcon from "@mui/icons-material/People";
+import { useTheme } from "@mui/material/styles";
 import logo from "../assets/logo IIAP.png";
+import levelup from "../assets/levelup.png"; // Import the event image
+import recentImage from "../assets/recent.png";
 
 const Events = () => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [level, setLevel] = useState("");
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -34,21 +45,25 @@ const Events = () => {
       <List>
         {["Events", "Membership", "Subscription", "Contact Us", "About Us"].map(
           (text) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemText primary={text} />
+              </ListItemButton>
             </ListItem>
           )
         )}
-        <ListItem button onClick={() => navigate("/")}>
-          <ListItemText primary="Login" />
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => navigate("/")}>
+            <ListItemText primary="Login" />
+          </ListItemButton>
         </ListItem>
       </List>
     </Box>
   );
 
   return (
-    <>
-      {/* Navigation Bar */}
+    <Box sx={{ width: "100%", overflowX: "hidden" }}>
+      {/* Navbar */}
       <AppBar
         position="static"
         sx={{
@@ -67,36 +82,47 @@ const Events = () => {
           >
             <MenuIcon />
           </IconButton>
+
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
             <img
               src={logo}
               alt="Logo"
-              style={{ height: "40px", marginRight: "10px" }}
+              style={{
+                height: isMobile ? "30px" : "40px",
+                marginRight: "10px",
+              }}
             />
             <Typography
               variant="h6"
-              sx={{ color: "white", fontWeight: "bold" }}
+              sx={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: isMobile ? "16px" : "20px",
+              }}
             >
               Institute of Internal Auditors
-              <Typography>Philippines</Typography>
+              <Typography sx={{ fontSize: isMobile ? "12px" : "16px" }}>
+                Philippines
+              </Typography>
             </Typography>
           </Box>
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Button color="inherit" sx={{ fontSize: "16px", margin: "0 10px" }}>
-              Events
-            </Button>
-            <Button color="inherit" sx={{ fontSize: "16px", margin: "0 10px" }}>
-              Membership
-            </Button>
-            <Button color="inherit" sx={{ fontSize: "16px", margin: "0 10px" }}>
-              Subscription
-            </Button>
-            <Button color="inherit" sx={{ fontSize: "16px", margin: "0 10px" }}>
-              Contact Us
-            </Button>
-            <Button color="inherit" sx={{ fontSize: "16px", margin: "0 10px" }}>
-              About Us
-            </Button>
+            {[
+              "Events",
+              "Membership",
+              "Subscription",
+              "Contact Us",
+              "About Us",
+            ].map((item) => (
+              <Button
+                key={item}
+                color="inherit"
+                sx={{ fontSize: "16px", margin: "0 10px" }}
+              >
+                {item}
+              </Button>
+            ))}
             <Button
               color="inherit"
               variant="outlined"
@@ -108,45 +134,59 @@ const Events = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Drawer */}
       <Drawer anchor="left" open={mobileOpen} onClose={handleDrawerToggle}>
         {drawer}
       </Drawer>
 
-      {/* Hero Section */}
+      {/* Banner */}
       <Box
         sx={{
-          backgroundImage: `url('https://images.squarespace-cdn.com/content/v1/6267a166a1232f0ba9502de7/1669901535383-37IXDVB00UNOH2CNFDX0/Corporate-Events-Hotel-Meeting-Spaces.jpg?format=1500w')`,
+          backgroundImage:
+            "url('https://images.squarespace-cdn.com/content/v1/6267a166a1232f0ba9502de7/1669901535383-37IXDVB00UNOH2CNFDX0/Corporate-Events-Hotel-Meeting-Spaces.jpg?format=1500w')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "400px",
+          height: isMobile ? "250px" : "400px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           color: "white",
-          textAlign: "left",
+          textAlign: "center",
           fontWeight: "bold",
-          paddingLeft: "50px",
+          px: isMobile ? 2 : 5,
         }}
       >
-        <Typography variant="h2" fontWeight="bold" sx={{ fontSize: "64px" }}>
+        <Typography
+          variant="h2"
+          fontWeight="bold"
+          sx={{ fontSize: isMobile ? "32px" : "64px" }}
+        >
           Upcoming Event Lists
         </Typography>
       </Box>
 
-      {/* Search and Filter Section */}
+      {/* Search & Filters */}
       <Container
         sx={{
           mt: 5,
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           gap: 2,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <Select
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
           displayEmpty
           variant="outlined"
-          sx={{ minWidth: 250, height: 45, backgroundColor: "white" }}
+          sx={{
+            width: isMobile ? "100%" : "250px",
+            height: 45,
+            backgroundColor: "white",
+          }}
         >
           <MenuItem value="">Level & Competency</MenuItem>
           <MenuItem value="Beginner">Beginner</MenuItem>
@@ -156,36 +196,123 @@ const Events = () => {
         <TextField
           variant="outlined"
           placeholder="Search Event"
-          sx={{ width: "400px", height: 45, backgroundColor: "white" }}
+          sx={{
+            width: isMobile ? "100%" : "400px",
+            height: 45,
+            backgroundColor: "white",
+          }}
         />
       </Container>
 
-      {/* Event Listings */}
-      <Container sx={{ mt: 5 }}>
+      {/* Event Card */}
+      <Container
+        sx={{ mt: 5, width: "100%", maxWidth: "1920px", mx: "auto", px: 2 }}
+      >
         <Card
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
             padding: "20px",
             backgroundColor: "#f8f9fa",
+            maxWidth: "100%",
           }}
         >
           <img
-            src="/event-banner.jpg"
-            alt="Event"
-            style={{ width: "150px", height: "auto", marginRight: "20px" }}
+            src={levelup}
+            alt="Level Up on Excel Event"
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              height: "auto",
+              marginBottom: "10px",
+            }}
+          />
+
+          <CardContent
+            sx={{ textAlign: { xs: "center", md: "left" }, width: "100%" }}
+          >
+            <Typography variant="h5" fontWeight="bold">
+              LEVEL UP ON EXCEL: A WEBINAR SERIES ON ADVANCED EXCEL WITH
+              MICROSOFT ACCESS (DAY 1)
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{ mt: 1, mb: 2 }}
+            >
+              This series of webinars will educate participants on the functions
+              and the advanced Excel formulas required to function as an Excel
+              power user.
+            </Typography>
+
+            <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <EventIcon sx={{ mr: 1 }} /> Jan 05, 2026 - Jan 05, 2027 | 06:30
+              PM - 08:30 PM
+            </Typography>
+
+            <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <PeopleIcon sx={{ mr: 1 }} /> Registration Fee:
+            </Typography>
+            <Typography variant="body2">
+              - With Good Standing: ₱375.00
+            </Typography>
+            <Typography variant="body2">
+              - Without Good Standing/Non-member: ₱500.00
+            </Typography>
+
+            <Typography
+              variant="body2"
+              sx={{ color: "orange", fontWeight: "bold", mt: 2 }}
+            >
+              ON-GOING REGISTRATION
+            </Typography>
+            <Button variant="contained" color="primary" sx={{ mt: 1 }}>
+              REGISTER NOW
+            </Button>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "center",
+            padding: "20px",
+            backgroundColor: "#f8f9fa",
+            mt: 5,
+          }}
+        >
+          <img
+            src={recentImage}
+            alt="Recent Developments in Taxation"
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              height: "auto",
+              marginBottom: "10px",
+            }}
           />
           <CardContent>
             <Typography variant="h5" fontWeight="bold">
-              Level Up on Excel:
+              Recent Developments in Taxation
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              A WEBINAR SERIES ON ADVANCED EXCEL WITH MICROSOFT ACCESS (DAY 1)
+              This webinar covers the objectives and changes in tax laws.
             </Typography>
+            <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <EventIcon sx={{ mr: 1 }} /> Jan 07, 2026 - Jan 07, 2026 | 10:00
+              AM - 12:00 PM
+            </Typography>
+            <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <PeopleIcon sx={{ mr: 1 }} /> Registration Fee: ₱375.00 - ₱500.00
+            </Typography>
+            <Button variant="contained" color="primary" sx={{ mt: 1 }}>
+              REGISTER NOW
+            </Button>
           </CardContent>
         </Card>
       </Container>
-    </>
+    </Box>
   );
 };
 

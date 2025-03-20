@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Added navigation
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -8,13 +8,24 @@ import {
   Box,
   Typography,
   Paper,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import logo from "../assets/logo IIAP.png"; // ✅ Added logo import
+import logo from "../assets/logo IIAP.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // ✅ Hook for navigation
+  const [error, setError] = useState(false); // ✅ State for error message
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    if (email.toLowerCase() === "email@gmail.com" && password === "123") {
+      navigate("/dashboard");
+    } else {
+      setError(true); // ✅ Show Snackbar
+    }
+  };
 
   return (
     <Box
@@ -25,8 +36,8 @@ const Login = () => {
         minHeight: "100vh",
         background: "linear-gradient(to right, #3b8d99, #6bbaa7)",
         padding: "20px",
-        position: "relative", // ✅ Allows absolute positioning for the button
-        flexDirection: "column", // ✅ Aligns logo and title above the form
+        position: "relative",
+        flexDirection: "column",
       }}
     >
       {/* ✅ Logo and Institute Name */}
@@ -39,20 +50,16 @@ const Login = () => {
           alignItems: "center",
         }}
       >
-        <img
-          src={logo}
-          alt="IIAP Logo"
-          style={{ height: "60px", display: "block" }}
-        />
-        <Typography variant="subtitle1" fontWeight="bold" mt={1}>
+        <img src={logo} alt="IIAP Logo" style={{ height: "100px" }} />
+        <Typography variant="subtitle1" color="white" fontWeight="bold" mt={1}>
           Institute of Internal Auditors Philippines
         </Typography>
       </Box>
 
-      {/* ✅ Floating Button in the Top-Right Corner */}
+      {/* ✅ Floating Button */}
       <Button
         variant="contained"
-        onClick={() => navigate("/dashboard")}
+        onClick={() => navigate("/events")}
         sx={{
           position: "absolute",
           top: 20,
@@ -69,15 +76,14 @@ const Login = () => {
       <Paper
         elevation={3}
         sx={{
-          width: "90%", // ✅ Adjusted for responsiveness
-          maxWidth: "500px", // ✅ Less wide on large screens
-          padding: "25px 30px", // ✅ Balanced padding
-          borderRadius: "15px", // ✅ Rounded corners
+          width: "90%",
+          maxWidth: "500px",
+          padding: "25px 30px",
+          borderRadius: "15px",
           textAlign: "center",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // ✅ Soft shadow
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
-        {/* Title */}
         <Typography variant="h6" fontWeight="bold" mb={1}>
           Member's Portal
         </Typography>
@@ -91,8 +97,9 @@ const Login = () => {
           size="small"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleLogin()} // ✅ Press Enter to login
           sx={{
-            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // ✅ Slightly rounded field
+            "& .MuiOutlinedInput-root": { borderRadius: "10px" },
           }}
         />
 
@@ -106,8 +113,9 @@ const Login = () => {
           size="small"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleLogin()} // ✅ Press Enter to login
           sx={{
-            "& .MuiOutlinedInput-root": { borderRadius: "10px" }, // ✅ Slightly rounded field
+            "& .MuiOutlinedInput-root": { borderRadius: "10px" },
           }}
         />
 
@@ -123,6 +131,7 @@ const Login = () => {
           <Button
             fullWidth
             variant="contained"
+            onClick={handleLogin}
             sx={{
               bgcolor: "#3b5bfd",
               "&:hover": { bgcolor: "#324dcf" },
@@ -179,6 +188,17 @@ const Login = () => {
           sent to your email.
         </Typography>
       </Paper>
+
+      {/* ✅ Snackbar for Error Message */}
+      <Snackbar
+        open={error}
+        autoHideDuration={3000} // Auto-close after 3 sec
+        onClose={() => setError(false)}
+      >
+        <Alert severity="error" onClose={() => setError(false)}>
+          Login Failed: Invalid Credentials
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
