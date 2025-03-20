@@ -21,7 +21,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../assets/logo IIAP.png";
 
-const Dashboard = () => {
+const Events = () => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -189,4 +189,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Events;

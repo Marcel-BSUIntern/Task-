@@ -63,7 +63,7 @@ const Login = () => {
           fontSize: "0.85rem",
         }}
       >
-        Go to Dashboard
+        Go to Events
       </Button>
 
       <Paper
