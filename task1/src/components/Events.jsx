@@ -298,14 +298,45 @@ const Events = () => {
               Recent Developments in Taxation
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              This webinar covers the objectives and changes in tax laws.
+              In light of the recent struggle of businesses due to the effects
+              of the COVID-19 pandemic, the CREATE was enacted into law to
+              alleviate some of the pressure businesses face in the form of
+              reorganized tax laws. This discussion will cover the objectives,
+              changes to the law, and implications of the CREATE Act on various
+              taxpayers. This webinar aims to equip tax practitioners, general
+              accountants, business owners, and accountancy students with a
+              basic understanding of the new law and how these changes affect
+              them. This will allow the participants to make more informed
+              decisions moving forward regarding matters that deal with this
+              change.
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Date
             </Typography>
             <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <EventIcon sx={{ mr: 1 }} /> Jan 07, 2026 - Jan 07, 2026 | 10:00
               AM - 12:00 PM
             </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Regstration Fee for Member(Online):
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              - With Good Standing
+            </Typography>
             <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-              <PeopleIcon sx={{ mr: 1 }} /> Registration Fee: ₱375.00 - ₱500.00
+              <PeopleIcon sx={{ mr: 1 }} /> ₱375.00
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              - - With Not Good Standing/Non-member
+            </Typography>
+            <Typography sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <PeopleIcon sx={{ mr: 1 }} /> ₱500.00
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: "orange", fontWeight: "bold", mt: 2 }}
+            >
+              ON-GOING REGISTRATION
             </Typography>
             <Button variant="contained" color="primary" sx={{ mt: 1 }}>
               REGISTER NOW
