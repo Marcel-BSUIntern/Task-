@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Grow } from "@mui/material";
 import {
   Modal,
   Box,
@@ -189,8 +192,21 @@ const RegistrationModal = ({ open, handleClose }) => {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Typography variant="h6" sx={{ mb: 2, textAlign: "center" }}>
+      <Box sx={{ ...style, position: "relative" }}>
+        {/* Close Button */}
+        <IconButton
+          onClick={handleCloseWithReset}
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            color: "red",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+
+        <Typography variant="h6" sx={{ mb: 0.5, textAlign: "left" }}>
           Registration: PFRS Toolkit Package
         </Typography>
 
@@ -386,7 +402,7 @@ const RegistrationModal = ({ open, handleClose }) => {
                     <Typography>{event?.label}:</Typography>
                   </Grid>
                   <Grid item xs={6} textAlign="right">
-                    <Typography>₱500.00</Typography>
+                    <Typography sx={{ color: "green" }}>₱500.00</Typography>
                   </Grid>
                 </React.Fragment>
               );
@@ -401,7 +417,9 @@ const RegistrationModal = ({ open, handleClose }) => {
                     <Typography>{subEvent?.label}:</Typography>
                   </Grid>
                   <Grid item xs={6} textAlign="right">
-                    <Typography>₱{subEvent?.price}.00</Typography>
+                    <Typography sx={{ color: "green" }}>
+                      ₱{subEvent?.price}.00
+                    </Typography>
                   </Grid>
                 </React.Fragment>
               );
@@ -412,7 +430,9 @@ const RegistrationModal = ({ open, handleClose }) => {
               <Typography fontWeight="bold">Total:</Typography>
             </Grid>
             <Grid item xs={6} textAlign="right">
-              <Typography fontWeight="bold">₱{calculateTotal()}.00</Typography>
+              <Typography fontWeight="bold" sx={{ color: "green" }}>
+                ₱{calculateTotal()}.00
+              </Typography>
             </Grid>
           </Grid>
         </Box>

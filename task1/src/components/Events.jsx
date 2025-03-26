@@ -162,19 +162,24 @@ const Events = () => {
           backgroundPosition: "center",
           height: isMobile ? "250px" : "400px",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          alignItems: "flex-start", // Move towards the top
+          justifyContent: "flex-start", // Move towards the left
           color: "white",
-          textAlign: "center",
+          textAlign: "left",
           fontWeight: "bold",
           px: isMobile ? 2 : 5,
+          paddingLeft: isMobile ? "30px" : "180px", // Fine-tune left spacing
+          paddingTop: isMobile ? "10px" : "40px", // Fine-tune top spacing
         }}
       >
         <Typography
           variant="h2"
           fontWeight="bold"
-          color="black"
-          sx={{ fontSize: isMobile ? "32px" : "64px" }}
+          color="white"
+          sx={{
+            fontSize: isMobile ? "32px" : "64px",
+            textShadow: "2px 2px 8px rgba(0, 0, 0, 0.6)", // Adjust for better contrast
+          }}
         >
           Upcoming Event Lists
         </Typography>
