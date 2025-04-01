@@ -45,7 +45,6 @@ const RegistrationModal = ({ open, handleClose }) => {
     contactNo: "",
     bundleType: "bundle",
     selectedEvents: ["pfrs9", "pfrs16", "pfrs15"],
-    selectedSubEvents: [],
     paymentProof: null,
     paymentMethod: "Bank Transfer", // New field for payment method
     referenceCode: "", // New state for reference code
@@ -69,20 +68,9 @@ const RegistrationModal = ({ open, handleClose }) => {
     },
   ];
 
-  const subEvents = [
-    { id: "sub1", label: "Sub-Event 1 - ₱200.00", price: 200 },
-    { id: "sub2", label: "Sub-Event 2 - ₱300.00", price: 300 },
-    { id: "sub3", label: "Sub-Event 3 - ₱400.00", price: 400 },
-  ];
-
   const calculateTotal = () => {
     const eventCost = formData.selectedEvents.length * 500;
-    const subEventCost = formData.selectedSubEvents.reduce((total, subId) => {
-      const subEvent = subEvents.find((sub) => sub.id === subId);
-      return subEvent ? total + subEvent.price : total;
-    }, 0);
-
-    return eventCost + subEventCost;
+    return eventCost;
   };
 
   const handleInputChange = (e) => {
@@ -113,20 +101,6 @@ const RegistrationModal = ({ open, handleClose }) => {
         ? [...prev.selectedEvents, value]
         : prev.selectedEvents.filter((e) => e !== value),
     }));
-  };
-
-  const handleSubEventChange = (event) => {
-    const { checked, value } = event.target;
-    setFormData((prev) => {
-      const updatedSelectedSubEvents = checked
-        ? [...prev.selectedSubEvents, value]
-        : prev.selectedSubEvents.filter((sub) => sub !== value);
-
-      return {
-        ...prev,
-        selectedSubEvents: updatedSelectedSubEvents,
-      };
-    });
   };
 
   const handleFileChange = (e) => {
@@ -182,11 +156,11 @@ const RegistrationModal = ({ open, handleClose }) => {
       contactNo: "",
       bundleType: "bundle",
       selectedEvents: ["pfrs9", "pfrs16", "pfrs15"], // Ensure this is always an array
-      selectedSubEvents: [], // Also ensure this is an array
       paymentProof: null,
       paymentMethod: "Bank Transfer",
       referenceCode: "",
     });
+    setErrors({});
     handleClose();
   };
 
@@ -353,28 +327,6 @@ const RegistrationModal = ({ open, handleClose }) => {
         </FormGroup>
 
         <Typography variant="subtitle1" sx={{ mt: 2 }}>
-          <strong>Select Sub-Events</strong> (Optional)
-        </Typography>
-
-        <FormGroup>
-          {subEvents.map((sub) => (
-            <FormControlLabel
-              key={sub.id}
-              control={
-                <Checkbox
-                  checked={formData.selectedSubEvents.includes(sub.id)}
-                  onChange={handleSubEventChange}
-                  value={sub.id}
-                />
-              }
-              label={
-                <Typography sx={{ color: "green" }}>{sub.label}</Typography>
-              }
-            />
-          ))}
-        </FormGroup>
-
-        <Typography variant="subtitle1" sx={{ mt: 2 }}>
           Total Due: ₱{calculateTotal()}.00
         </Typography>
 
@@ -403,23 +355,6 @@ const RegistrationModal = ({ open, handleClose }) => {
                   </Grid>
                   <Grid item xs={6} textAlign="right">
                     <Typography sx={{ color: "green" }}>₱500.00</Typography>
-                  </Grid>
-                </React.Fragment>
-              );
-            })}
-
-            {/* Display individual Sub-Events */}
-            {formData.selectedSubEvents.map((subId) => {
-              const subEvent = subEvents.find((sub) => sub.id === subId);
-              return (
-                <React.Fragment key={subId}>
-                  <Grid item xs={6}>
-                    <Typography>{subEvent?.label}:</Typography>
-                  </Grid>
-                  <Grid item xs={6} textAlign="right">
-                    <Typography sx={{ color: "green" }}>
-                      ₱{subEvent?.price}.00
-                    </Typography>
                   </Grid>
                 </React.Fragment>
               );
